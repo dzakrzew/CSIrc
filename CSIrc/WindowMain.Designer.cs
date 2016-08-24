@@ -79,7 +79,7 @@
             this.eButtonSend.Name = "eButtonSend";
             this.eButtonSend.Size = new System.Drawing.Size(150, 20);
             this.eButtonSend.TabIndex = 4;
-            this.eButtonSend.Text = "Wyślij";
+            this.eButtonSend.Text = "Send";
             this.eButtonSend.UseVisualStyleBackColor = true;
             this.eButtonSend.Click += new System.EventHandler(this.eButtonSend_Click);
             // 
