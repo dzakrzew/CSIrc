@@ -92,7 +92,7 @@
             this.eNickname.Name = "eNickname";
             this.eNickname.Size = new System.Drawing.Size(156, 20);
             this.eNickname.TabIndex = 5;
-            this.eNickname.Text = "Dominiolek";
+            this.eNickname.Text = "";
             // 
             // eUsername
             // 
@@ -100,7 +100,7 @@
             this.eUsername.Name = "eUsername";
             this.eUsername.Size = new System.Drawing.Size(156, 20);
             this.eUsername.TabIndex = 6;
-            this.eUsername.Text = "dddd";
+            this.eUsername.Text = "";
             // 
             // label4
             // 
@@ -117,7 +117,7 @@
             this.eRealname.Name = "eRealname";
             this.eRealname.Size = new System.Drawing.Size(156, 20);
             this.eRealname.TabIndex = 8;
-            this.eRealname.Text = "ddddd";
+            this.eRealname.Text = "";
             // 
             // label5
             // 
