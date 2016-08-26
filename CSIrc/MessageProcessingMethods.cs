@@ -176,6 +176,7 @@ namespace CSIrc
             var ctx = ContextCollection.GetByName(message.ParamsArray[2]);
 
             ctx.Topic = message.Text;
+            ctx.WriteLine(RTF.ColourString("Topic for " + message.ParamsArray[2] + ": " + message.Text, IrcColor.Green));
 
             if (ctx == ContextCollection.Current)
             {
@@ -553,7 +554,7 @@ namespace CSIrc
                 if (ctx != null)
                 {
                     ((IrcChannel)ctx).Users.Add(message.Nick);
-                    ctx.WriteLine(RTF.ColourString(message.Nick + " (" + message.Ident + "@" + message.Host + ") has joined.", IrcColor.Green));
+                    ctx.WriteLine(RTF.ColourString(message.Nick + " (" + message.Ident + "@" + message.Host + ") has joined.", IrcColor.Orange));
 
                     Program.MainWindow.UpdateUsersList();
                 }
@@ -572,7 +573,7 @@ namespace CSIrc
             }
             else
             {
-                ctx.WriteLine(RTF.ColourString(string.Format("{0} has been kicked by {1} ({2})", message.ParamsArray[2], message.Nick, message.Text), IrcColor.Green));
+                ctx.WriteLine(RTF.ColourString(string.Format("{0} has been kicked by {1} ({2})", message.ParamsArray[2], message.Nick, message.Text), IrcColor.Orange));
                 ctx.UsersList.Remove(message.ParamsArray[2]);
                 Program.MainWindow.UpdateUsersList();
             }
@@ -614,7 +615,7 @@ namespace CSIrc
                 if (ctx != null)
                 {
                     ((IrcChannel)ctx).Users.Remove(message.Nick);
-                    ctx.WriteLine(RTF.ColourString(message.Nick + " has left.", IrcColor.Green));
+                    ctx.WriteLine(RTF.ColourString(message.Nick + " has left.", IrcColor.Orange));
 
 
                     Program.MainWindow.UpdateUsersList();

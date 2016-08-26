@@ -222,7 +222,7 @@
                 UpdateContent();
                 UpdateChannelsList();
 
-                Program.MainWindow.Text = "CSIrc: " + ContextCollection.Current.Name;
+                Program.MainWindow.Text = "CSIrc: " + ContextCollection.Server.Client.Nickname + " on " + ((IIrcContext)ContextCollection.Server).Name + " (" + ContextCollection.Current.Name + ")";
 
                 Program.MainWindow.eTextInput.Focus();
             }
