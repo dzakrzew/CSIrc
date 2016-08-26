@@ -1,30 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CSIrc
 {
-    static class MessageProcessing
+    static class CommandProcessing
     {
         public static MethodInfo GetMethod(string _str)
         {
             MethodInfo oMethodInfo = null;
-            Type oType = typeof(MessageProcessingMethods);
+            Type oType = typeof(CommandProcessingMethods);
             MethodInfo[] aoInfo = oType.GetMethods();
 
             foreach (MethodInfo oInfo in aoInfo)
             {
-                var oAttributes = oInfo.GetCustomAttributes(typeof(MessageProcessorAttribute), false);
+                var oAttributes = oInfo.GetCustomAttributes(typeof(CommandProcessorAttribute), false);
 
                 if (oAttributes == null || oAttributes.Count() == 0)
                 {
                     continue;
                 }
 
-                foreach (MessageProcessorAttribute oAttribute in oAttributes)
+                foreach (CommandProcessorAttribute oAttribute in oAttributes)
                 {
                     if (oAttribute.Property == _str)
                     {

@@ -59,7 +59,7 @@ namespace CSIrc
 
         public void Connect()
         {
-            WriteLine("Connecting to " + hostname + " on port " + port.ToString() + "...");
+            WriteLine("Connecting to " + RTF.ColourString(hostname, IrcColor.LightRed) + " on port " + RTF.ColourString(port.ToString(), IrcColor.LightRed) + "...");
 
             try
             {
@@ -67,7 +67,7 @@ namespace CSIrc
             }
             catch (Exception)
             {
-                WriteLine("Cannot connect to " + hostname + " on port " + port.ToString() + "!");
+                WriteLine("Cannot connect to " + RTF.ColourString(hostname, IrcColor.LightRed) + " on port " + RTF.ColourString(port.ToString(), IrcColor.LightRed) + "!");
                 return;
             }
 
@@ -102,7 +102,7 @@ namespace CSIrc
 
         public void WriteLine(string msg)
         {
-            content += RTF.ColourfulTimestamp() + RTF.Escape(msg) + @"\line";
+            content += DateTime.Now.ToString("[HH:mm:ss] ") + msg + @"\line";
 
             if (ContextCollection.Current == this)
             {
@@ -132,7 +132,7 @@ namespace CSIrc
                         }
                         else
                         {
-                            WriteLine("Unrecognized command (" + message.Command + ")");
+                            WriteLine(RTF.ColourString(message.Command, IrcColor.LightRed) + ": " + message.Text + "(" + RTF.ColourString(message.Params.Trim(), IrcColor.Orange) + ")");
                         }
                     }
                     catch (Exception e)

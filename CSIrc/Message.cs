@@ -42,7 +42,7 @@ namespace CSIrc
         }
         public string Text
         {
-            get {  return Parameters[7]; }
+            get {  return RTF.Escape(Parameters[7]); }
         }
 
         public Message(string _query)

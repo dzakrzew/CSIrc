@@ -51,7 +51,7 @@ namespace CSIrc
 
         public void WriteLine(string msg)
         {
-            content += RTF.ColourfulTimestamp() + RTF.Escape(msg) + @"\line";
+            content += DateTime.Now.ToString("[HH:mm:ss] ") + msg + @"\line";
 
             if (ContextCollection.Current == this)
             {
@@ -63,13 +63,13 @@ namespace CSIrc
         {
             if (_msg.Length > 5 && _msg.Substring(0,7) == "\u0001ACTION")
             {
-                content += RTF.ColourfulTimestamp() + @"{" + RTF.Colors["red"] + " * " + _nick + RTF.Escape(_msg.Substring(7)) + "}" + @"\line";
+                content += DateTime.Now.ToString("[HH:mm:ss] ") + @"{" + RTF.Colors[4] + " * " + _nick + _msg.Substring(7) + "}" + @"\line";
             }
             else
             {
-                string c = (_nick == ContextCollection.Server.Client.Nickname) ? RTF.Colors["red"] : RTF.Colors["blue"];
+                string c = (_nick == ContextCollection.Server.Client.Nickname) ? RTF.Colors[4] : RTF.Colors[2];
 
-                content += RTF.ColourfulTimestamp() + @"<{" + c + " " + _nick + @"}> " + RTF.Escape(_msg) + @"\line";
+                content += DateTime.Now.ToString("[HH:mm:ss] ") + @"<{" + c + " " + _nick + @"}> " + _msg + @"\line";
             }
 
             if (ContextCollection.Current == this)
@@ -80,16 +80,6 @@ namespace CSIrc
             {
                 ContextCollection.ActiveContexts.Add(this.name);
                 Program.MainWindow.UpdateChannelsList();
-            }
-        }
-
-        public void WriteNotify(string _msg, string _color = "green")
-        {
-            content += RTF.ColourfulTimestamp() + @"{" + RTF.Colors[_color] + " " + RTF.Escape(_msg) + " } " + @"\line"; 
-
-            if (ContextCollection.Current == this)
-            {
-                Program.MainWindow.UpdateContent();
             }
         }
     }

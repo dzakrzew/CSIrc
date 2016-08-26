@@ -43,7 +43,7 @@ namespace CSIrc
 
         public void WriteLine(string msg)
         {
-            content += RTF.ColourfulTimestamp() + RTF.Escape(msg) + @"\line";
+            content += DateTime.Now.ToString("[HH:mm:ss] ") + msg + @"\line";
 
             if (ContextCollection.Current == this)
             {
@@ -53,9 +53,9 @@ namespace CSIrc
 
         public void WriteMessage(string _nick, string _msg)
         {
-            string c = (_nick == ContextCollection.Server.Client.Nickname) ? RTF.Colors["red"] : RTF.Colors["blue"];
-
-            content += RTF.ColourfulTimestamp() + @"<{" + c + " " + _nick + @"}> " + RTF.Escape(_msg) + @"\line";
+            string c = (_nick == ContextCollection.Server.Client.Nickname) ? RTF.Colors[4] : RTF.Colors[2];
+            
+            content += DateTime.Now.ToString("[HH:mm:ss] ") + @"<{" + c + " " + _nick + @"}> " + _msg + @"\line";
 
             if (ContextCollection.Current == this)
             {

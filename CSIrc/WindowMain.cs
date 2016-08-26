@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -20,19 +22,39 @@ namespace CSIrc
         {
             if (eTextInput.Text.Length > 0)
             {
-                history.Add(eTextInput.Text);
+                string input = RTF.Escape(eTextInput.Text);
+
+                history.Add(input);
                 history_i = history.Count - 1;
 
-                if (eTextInput.Text[0] == '/')
+                if (input.StartsWith("/"))
                 {
-                    ContextCollection.Server.SendQuery(eTextInput.Text.Substring(1));
+                    try
+                    {
+                        Match m = Regex.Match(input, @"^\/([A-Za-z]+) ?(.*)?$");
+
+                        MethodInfo oMethodInfo = CommandProcessing.GetMethod(m.Groups[1].Value.ToLower());
+
+                        if (oMethodInfo != null)
+                        {
+                            oMethodInfo.Invoke(new CommandProcessingMethods(), new object[] { (m.Groups[2] != null) ? m.Groups[2].Value : null });
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        ContextCollection.Current.WriteLine("Command not found.");
+                    }
                 }
-                else if (ContextCollection.Current != ContextCollection.Server)
+                else
                 {
                     ContextCollection.Server.SendQuery("PRIVMSG " + ContextCollection.Current.Name + " :" + eTextInput.Text);
-                    ContextCollection.Current.WriteMessage(ContextCollection.Server.Client.Nickname, eTextInput.Text);
+                    ContextCollection.Current.WriteMessage(ContextCollection.Server.Client.Nickname, input);
                 }
-                
+
                 eTextInput.Clear();
             }
         }
@@ -87,7 +109,7 @@ namespace CSIrc
 
             if (userItem == null) return;
 
-            Match m = Regex.Match(userItem.ToString(), "^[@+](.*)$");
+            Match m = Regex.Match(userItem.ToString(), "^[@+]?(.*)$");
 
             string targetNick = m.Groups[1].Value;
 
@@ -102,7 +124,19 @@ namespace CSIrc
                 ContextCollection.Current = ctx;
                 UpdateContext();
             }
-            
+        }
+
+        private void eTopic_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter && ContextCollection.Current is IrcChannel)
+            {
+                ContextCollection.Server.SendQuery("TOPIC " + ContextCollection.Current.Name + " :" + eTopic.Text);
+            }
+        }
+
+        private void eContent_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
         }
     }
 }

@@ -49,6 +49,7 @@
             this.eContent.Size = new System.Drawing.Size(665, 330);
             this.eContent.TabIndex = 0;
             this.eContent.Text = "";
+            this.eContent.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.eContent_LinkClicked);
             this.eContent.TextChanged += new System.EventHandler(this.eContent_TextChanged);
             // 
             // eTextInput
@@ -70,6 +71,7 @@
             this.eTopic.Name = "eTopic";
             this.eTopic.Size = new System.Drawing.Size(665, 20);
             this.eTopic.TabIndex = 2;
+            this.eTopic.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.eTopic_KeyPress);
             // 
             // eButtonSend
             // 
@@ -221,6 +223,8 @@
                 UpdateChannelsList();
 
                 Program.MainWindow.Text = "CSIrc: " + ContextCollection.Current.Name;
+
+                Program.MainWindow.eTextInput.Focus();
             }
         }
     }
