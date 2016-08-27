@@ -53,13 +53,30 @@ namespace CSIrc
 
         public void WriteMessage(string _nick, string _msg)
         {
-            string c = (_nick == ContextCollection.Server.Client.Nickname) ? RTF.Colors[4] : RTF.Colors[2];
-            
-            content += DateTime.Now.ToString("[HH:mm:ss] ") + @"<{" + c + " " + _nick + @"}> " + _msg + @"\line";
+            if (_msg.Contains(ContextCollection.Server.Client.Nickname))
+            {
+                _msg = RTF.ColourString(_msg, IrcColor.Black, IrcColor.Yellow);
+            }
+
+            if (_msg.Length > 5 && _msg.Substring(0, 7) == "\u0001ACTION")
+            {
+                content += DateTime.Now.ToString("[HH:mm:ss] ") + RTF.ColourString(" * " + _nick + _msg.Substring(7), IrcColor.LightRed) + @"\line";
+            }
+            else
+            {
+                IrcColor c = (_nick == ContextCollection.Server.Client.Nickname) ? IrcColor.LightRed : IrcColor.Blue;
+
+                content += DateTime.Now.ToString("[HH:mm:ss] ") + "<" + RTF.ColourString(_nick, c) + "> " + _msg + @"\line";
+            }
 
             if (ContextCollection.Current == this)
             {
                 Program.MainWindow.UpdateContent();
+            }
+            else
+            {
+                ContextCollection.ActiveContexts.Add(this.name);
+                Program.MainWindow.UpdateChannelsList();
             }
         }
     }

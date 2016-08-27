@@ -61,15 +61,20 @@ namespace CSIrc
 
         public void WriteMessage(string _nick, string _msg)
         {
+            if (_msg.Contains(ContextCollection.Server.Client.Nickname))
+            {
+                _msg = RTF.ColourString(_msg, IrcColor.Black, IrcColor.Yellow);
+            }
+
             if (_msg.Length > 5 && _msg.Substring(0,7) == "\u0001ACTION")
             {
-                content += DateTime.Now.ToString("[HH:mm:ss] ") + @"{" + RTF.Colors[4] + " * " + _nick + _msg.Substring(7) + "}" + @"\line";
+                content += DateTime.Now.ToString("[HH:mm:ss] ") + RTF.ColourString(" * " + _nick + _msg.Substring(7), IrcColor.LightRed) + @"\line";
             }
             else
             {
-                string c = (_nick == ContextCollection.Server.Client.Nickname) ? RTF.Colors[4] : RTF.Colors[2];
+                IrcColor c = (_nick == ContextCollection.Server.Client.Nickname) ? IrcColor.LightRed : IrcColor.Blue;
 
-                content += DateTime.Now.ToString("[HH:mm:ss] ") + @"<{" + c + " " + _nick + @"}> " + _msg + @"\line";
+                content += DateTime.Now.ToString("[HH:mm:ss] ") + "<" + RTF.ColourString(_nick, c) + "> " + _msg + @"\line";
             }
 
             if (ContextCollection.Current == this)

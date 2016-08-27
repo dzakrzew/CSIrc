@@ -112,7 +112,7 @@ namespace CSIrc
             return _ret;
         }
 
-        public static string ColourString(string _text, IrcColor color)
+        public static string ColourString(string _text, IrcColor color, IrcColor back = IrcColor.White)
         {
             string text = _text;
 
@@ -121,7 +121,7 @@ namespace CSIrc
                 text = " " + _text;
             }
 
-            return "{" + RTF.Colors[(int)color] + text + "}";
+            return "{" + RTF.Colors[(int)color] + RTF.BackgroundColors[(int)back] + text + "}";
         }
     }
 }
