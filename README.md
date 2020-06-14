@@ -18,4 +18,4 @@ Yet another f*cked up IRC client written in C#. Use at your own risk!
 - `/close` closes current window
 
 # License
-[MIT](https://github.com/Dominiol/CSIrc/blob/master/LICENSE)
+[MIT](https://github.com/dzakrzew/CSIrc/blob/master/LICENSE)
