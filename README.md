@@ -1,5 +1,5 @@
 # CSIrc
-Yet another f*cked up IRC client written in C#. Use at your own risk!
+Yet another IRC client written in C#.
 
 ![alt tab](https://i.imgur.com/H1FLvxL.png)
 
